@@ -1,0 +1,85 @@
+#root {
+  margin: 0 auto;
+  padding: 0 auto;
+}
+
+.logo {
+  margin: 0;
+  padding: 1vh;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 1em #1018a0aa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 1em #00c8ffaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.header {
+  min-width: 100%;
+  display: flex;
+  max-height: 10vh;
+  border-bottom: 1px solid rgb(86, 36, 204);
+}
+
+.connect {
+  margin-left: auto;
+  margin-right: 5vh;
+  margin-top: 0.7vh;
+  min-width: 15vh;
+  max-height: 6vh;
+  min-height: 6vh;
+}
+
+
+.exit {
+  margin-left: auto;
+  margin-right: 2vh;
+  margin-top: 0.7vh;
+  min-width: 15vh;
+  max-height: 6vh;
+  min-height: 6vh;
+}
+.exit:hover {
+  background-color: rgb(78, 2, 2);
+}
+
+#buttons_div {
+  margin-left: auto;
+}
+
+#lk {
+  margin-right: 2vh;
+}
+
+.infoPrivateCab {
+  margin: 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid rgb(86, 36, 204);
+  border-right: 1px solid rgb(86, 36, 204);
+  display: flex;
+}
+
+.privateNicks {
+  text-align: center;
+  border-bottom: 1px groove rgb(86, 36, 204);
+  border-top: 1px groove rgb(86, 36, 204);
+}
