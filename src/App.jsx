@@ -1,12 +1,16 @@
-import { useState,useEffect, useCallback } from 'react'
+import { useState,useEffect} from 'react'
 //modules
 import Header from './modules/header/Header'
 import PrivateCab from './modules/privateCab/PrivateCab';
 import Main from './modules/main/Main';
 //contract ABI
 import { ethers } from 'ethers';
+//NC token
 import NameCoin from './artifacts/contracts/NameCoin.sol/NameCoin.json';
 import NCAddress from '../NCAddress.json';
+//NFT token
+import NameWorld from './artifacts/contracts/NameWorld.sol/NameWorld.json';
+import NameWorldAddress from '../NameWorldAddress.json';
 
 
 import './App.css'
@@ -30,6 +34,7 @@ export default function App() {
     const useContract = async () => {
       try {
         nameCoin = new ethers.Contract(NCAddress, NameCoin.abi, provider);
+        nameWorld = new ethers.Contract(NameWorldAddress, NameWorld.abi, provider);
       }
       catch(e) {
         console.log(e);
@@ -49,7 +54,8 @@ export default function App() {
       {!provider ? (<>
       <p>Пожалуйста совершите вход</p></>) : (<>
       {mainSt && (<><Main/></>)}
-      {privateCabSt && (<><PrivateCab nameCoin={nameCoin} signer={signer}/></>)}
+      {privateCabSt && (<><PrivateCab nameCoin={nameCoin} nameWorld={nameWorld}
+       signer={signer}/></>)}
       
       </>)}
     </>

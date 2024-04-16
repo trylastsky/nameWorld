@@ -14,21 +14,13 @@ contract NameWorld is ERC721 {
 
     uint[] public allIdTokens; // 
 
-    mapping(uint => NameNft) public idNftMap; //
+    mapping(uint => NameNft) public idNftMap; //маппинг где лежит по значению сам токен nft
+    mapping(uint => bool) public statusToSale; //статус продажи той или иной nft
     mapping(string => bool) public statusName; //статус имени чтобы его не заняли больше
     mapping(address => uint[]) public userNft; // nft токены пользователя
 
     constructor() ERC721("NameNFT", "NFT")  {
         owner = msg.sender; //назначаем owner
-        userNft[owner].push(allIdTokens.length); //добавляем id token в мапинг 
-        idNftMap[allIdTokens.length] = NameNft("Trylastsky"); //
-        statusName["Trylastsky"] = true; // делаем имя забронированным
-        _mint(owner, allIdTokens.length);// переводим ему nft токен
-        allIdTokens.push(allIdTokens.length);//добавляем в общий массив id токена
-    }
-
-    function lengthUserNft() view public returns(uint) { //длина мапинга id токенов юзера
-        return(userNft[msg.sender].length);
     }
 
         function mintToken(string memory _name) public {
@@ -40,5 +32,6 @@ contract NameWorld is ERC721 {
         allIdTokens.push(allIdTokens.length);//добавляем в общий массив id токена
     }
 
+    
 
 }   
