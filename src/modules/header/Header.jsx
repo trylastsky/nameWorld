@@ -1,4 +1,4 @@
-import { ethers, BrowserProvider, getDefaultProvider} from "ethers";
+import { ethers, BrowserProvider} from "ethers";
 import { useCallback, useEffect } from "react";
 
 export default function Header({
@@ -24,7 +24,7 @@ export default function Header({
 	});
 
 	useEffect(() => {
-        window.ethereum.on('accountsChanged', () => {onConnect()})
+        if(window.ethereum) window.ethereum.on('accountsChanged', () => {onConnect()})
 	}, [signer]);
     
 	return (
