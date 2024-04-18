@@ -134,3 +134,8 @@
   border-top: 1vh solid rgb(86, 36, 204);
   border-radius: 1vh;
 }
+
+.buttonCont {
+  display: flex;
+  align-items: center;
+}

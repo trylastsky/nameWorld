@@ -8,32 +8,20 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract NameCoin is ERC20 {
 
     address payable public owner;
-    uint price = 1; // цена за 1000 токенов
 
     constructor() ERC20("NameCoin", "NC") {
         owner = payable(msg.sender);
         uint _totalSupply = 1000000000; // 10 000 000 tokens
-        _mint(owner, _totalSupply);
+        _mint(owner, _totalSupply); // банк NC составит 10 000 000
     }
 
-    function mint(uint _value) public {
-        require(msg.sender == owner, "you not owner@!");
+    function mint(uint _value) external { // функция выпуска NC
         _mint(owner, _value);
     }
 
-    
-    function buyToken(uint256 _value) public payable {
-    uint256 tokenAmount = _value * 1000;    // Вычисляем количество токенов для передачи
-    uint256 ethValue = _value * 1 ether;  // Проверяем, что отправленное количество ETH достаточно для покупки токенов
-    require(msg.value >= ethValue, "Insufficient ETH sent");
-    _transfer(owner, msg.sender, tokenAmount);    // Выполняем перевод токенов
-    owner.transfer(msg.value);  // Переводим эфирные средства на адрес владельца контракта
-   
+    function transfer(address _from, address _to, uint _value) external { // перевод NC
+        _transfer(_from, _to, _value); 
+    }
+
 
 }
-
-
-
-  
-}
-
