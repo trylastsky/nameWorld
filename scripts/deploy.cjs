@@ -23,7 +23,7 @@ async function main() {
       await nameWorld.connect(deployer).mintNNFT(names[i].name);
       console.log(`Name added: ${names[i].name}`);
     }
-    fs.writeFileSync('contractAddress.json', JSON.stringify(nameCoin.target));
+    fs.writeFileSync('contractAddress.json', JSON.stringify(nameWorld.target));
 
 }
 

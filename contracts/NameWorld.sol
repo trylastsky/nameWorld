@@ -20,7 +20,7 @@ contract NameWorld { //main контракт
 
     mapping(uint => NameNftStruct) public idNftMap; //маппинг где лежит по значению сам токен nft
     mapping(uint => bool) public statusToSale; //статус продажи той или иной nft
-    // mapping(string => uint) public idForString; // для получения айди токена по его строке
+    mapping(string => uint) public idForString; // для получения айди токена по его строке
     mapping(string => bool) public statusName; //статус имени чтобы его не заняли больше
     mapping(address => uint[]) public userNft; // nft токены пользователя
 
@@ -38,7 +38,15 @@ contract NameWorld { //main контракт
 
     function transferNC (address _to, uint _value) public { //отправка токенов NC на другой адресс
         NC.transfer(msg.sender, _to, _value);
+        for(uint i = 0; i < userNft[msg.sender].length; i++) {     // Проходим по массиву в прямом порядке
+            if(userNft[msg.sender][i] == _value) { // Если найден элемент с значением _value, удаляем его из массива
+            userNft[msg.sender][i] = userNft[msg.sender][userNft[msg.sender].length - 1];// Перемещаем последний элемент на место удаляемого
+            userNft[msg.sender].pop();   // Удаляем последний элемент массива
+            // Выходим из цикла, если хотим удалить только первое вхождение _value
+            break;
+        }
     }
+}
 
     function buyNC() public payable { // функция покупки пользователем NC , 1 ETH = 1000 NC
         require(msg.value >= TOKEN_PRICE, "Insufficient Ether sent"); // Проверяем, что отправлено достаточное количество эфиров
@@ -72,6 +80,7 @@ contract NameWorld { //main контракт
             NNFT.mint(allIdTokens.length); //выпуск токена
         }
         //Общий исход создания NNFT
+        idForString[_name] = allIdTokens.length;
         statusToSale[allIdTokens.length] = false; // ставим статус продажи false
         idNftMap[allIdTokens.length] = NameNftStruct(_name); // добавляем само nft в ключ значение
         userNft[msg.sender].push(allIdTokens.length); //добавляем id token в мапинг юзера
