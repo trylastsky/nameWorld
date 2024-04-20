@@ -49,7 +49,7 @@ contract NameWorld { //main контракт
     }
 
     function balanceNC(address _address) public view returns (uint balance) { //баланс в NC token
-        balance = NC.balanceOf(_address);
+        balance = NC.balance(_address);
     }
 
     function totalSupplyNC() public view returns (uint total) {// общее колво выпущенных токенов NC

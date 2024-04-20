@@ -23,5 +23,9 @@ contract NameCoin is ERC20 {
         _transfer(_from, _to, _value); 
     }
 
+    function balance(address _adr) external view returns(uint bal) {
+        bal = balanceOf(_adr);
+    }
+
 
 }
