@@ -83,6 +83,7 @@ contract NameWorld { //main контракт
     function transferNNFT(address _from, address _to, uint _value) public { //перевод токена другому юзеру
         NNFT.transfer(_from, _to, _value); // перевод
         userNft[_to].push(_value); // пушим переведенный nft тому кому перевели
+        statusToSale[_value] = false;
         for(uint i = 0; i < userNft[_from].length; i++) {     // Проходим по массиву в прямом порядке
             if(userNft[_from][i] == _value) { // Если найден элемент с значением _value, удаляем его из массива
             userNft[_from][i] = userNft[_from][userNft[_from].length - 1];// Перемещаем последний элемент на место удаляемого
