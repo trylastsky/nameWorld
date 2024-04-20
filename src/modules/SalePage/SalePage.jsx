@@ -23,17 +23,16 @@ export default function SalePage({nameWorld, signer}) {
         setSaleNftMas(newMas);
         }
         setState()
-    }, [])
+    }, [signer])
 
     return(<>
     <div id="nadodd">
     <h3>Торговая площадка</h3>
     </div>
     <div className="namesList" key={'salePage'}>
-    {saleNFTMas.map((NFT, index) => (<>
+    {saleNFTMas.map((NFT) => (<>
         <div className="nameContainer" key={"SaleName_" + NFT.name}>
         <h3>{NFT.name}</h3>
-        <p>index {index}</p>
         <p>Владелец:</p>
         <p>{NFT.owner}</p>
         <p>Цена: {NFT.price}</p>
