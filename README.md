@@ -8,7 +8,7 @@ NameWorld - это Dapp-приложение, основанное на стан
 
 1. Клонируйте или загрузите репозиторий NameWorld:
 
-    bash     git clone https://github.com/trylastsky/nameWorld     
+    bash    git clone https://github.com/trylastsky/nameWorld     
 
 2. В корневой папке проекта запустите соответствующий скрипт в зависимости от вашей операционной системы:
 
