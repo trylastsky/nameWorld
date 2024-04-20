@@ -91,44 +91,64 @@
   grid-template-columns: auto auto auto auto auto;
 }
 
+
+.sale {
+  min-height: 1vh;
+  max-height: 5vh;
+  min-width: 20vh;
+  border-radius: 1vh;
+}
+
+.logoDiv {
+  text-align: center;
+}
+
 @media (max-width: 1500px) {
   .namesList {
     grid-template-columns: auto auto auto auto ;
   }
+
 }
 
 @media (max-width: 1100px) {
   .namesList {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto ;
   }
+
 }
 
 @media (max-width: 800px) {
   .namesList {
-    grid-template-columns: auto auto;
+    grid-template-columns: auto;
   }
+
+  .header {
+    min-height: 15vh;
+  }
+
+  .logoDiv {
+    margin-top: 3vh;
+  }
+
 }
 
 .nameContainer {
+  display: flex;
   margin: 1vh;
   min-width: 15vh;
-  max-width: 25vh;
+  max-width: 50vh;
   min-height: 5vh;
   max-height: 100%;
   text-align: center;
-  display: flex;
   flex-direction: column;
   align-items: center;
   border: 1px solid rgb(86, 36, 204);
   border-radius: 1vh;
 }
 
-.sale {
-  min-height: 1vh;
-  max-height: 5vh;
-  min-width: 25vh;
-  border-radius: 1vh;
-}
+
+
+
 
 .sale:hover {
   border-top: 1vh solid rgb(86, 36, 204);
@@ -138,4 +158,9 @@
 .buttonCont {
   display: flex;
   align-items: center;
+}
+
+#nadodd {
+  text-align: center;
+  border-bottom: 1px solid rgb(86, 36, 204);
 }

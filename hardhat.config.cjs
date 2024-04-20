@@ -9,10 +9,5 @@ module.exports = {
     cache: './src/artifacts/cache',
     
   },
-  networks: {
-    hardhat: {
-      chainId: 777,
-    },
-  },
   
 };

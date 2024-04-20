@@ -2,7 +2,7 @@ import { useState,useEffect} from 'react'
 //modules
 import Header from './modules/header/Header'
 import PrivateCab from './modules/privateCab/PrivateCab';
-import Main from './modules/main/Main';
+import SalePage from './modules/SalePage/SalePage';
 //contract ABI
 import { ethers } from 'ethers';
 import NameWorld from './artifacts/contracts/NameWorld.sol/NameWorld.json';
@@ -45,7 +45,7 @@ export default function App() {
       />
       {!provider ? (<>
       <p>Пожалуйста совершите вход</p></>) : (<>
-      {mainSt && (<><Main/></>)}
+      {mainSt && (<><SalePage nameWorld={nameWorld} signer={signer}/></>)}
       {privateCabSt && (<><PrivateCab 
         nameWorld={nameWorld}
         signer={signer}/></>)}

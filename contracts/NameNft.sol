@@ -10,8 +10,12 @@ contract NameNft is ERC721 {
     constructor() ERC721("NameNFT", "NNFT")  {
     }
 
-    function mint(uint _allIdTokenslength) external {
-        _mint(msg.sender, _allIdTokenslength);// переводим ему nft токен
+    function mint(address to, uint _allIdTokenslength) external {
+        _mint(to, _allIdTokenslength);
+    }
+
+    function transfer(address _from,address _to, uint _tokenId) external {
+        _transfer(_from, _to, _tokenId);
     }
  
 

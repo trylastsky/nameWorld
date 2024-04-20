@@ -1,8 +1,24 @@
-# React + Vite
+# NameWorld
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NameWorld - это Dapp-приложение, основанное на стандартах ERC20 и ERC721, предназначенное для бронирования никнейма в качестве NFT и передачи или продажи его другим пользователям.
 
-Currently, two official plugins are available:
+## Запуск
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Установка зависимостей
+
+1. Клонируйте или загрузите репозиторий NameWorld:
+
+    bash     git clone https://github.com/trylastsky/nameWorld     
+
+2. В корневой папке проекта запустите соответствующий скрипт в зависимости от вашей операционной системы:
+
+    - Для Windows: start.bat
+    - Для Linux: start.sh
+
+3. После запуска скрипта вам откроются два терминала. В терминале с Hardhat Node скопируйте ссылку http://127.0.0.1:8545/. Затем установите MetaMask и создайте кастомную сеть с URL, скопированным из терминала с Hardhat Node, а также с приложенным chainID 31337.
+
+4. Импортируйте аккаунты тестовой сети Hardhat. Приватные ключи вы можете взять прямо из терминала с Hardhat Node.
+
+---
+
+© Trylastsky NameWorld

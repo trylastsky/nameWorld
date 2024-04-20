@@ -30,7 +30,7 @@ export default function Header({
 	return (
 		<>
 			<div className="header">
-				<div>
+				<div className="logoDiv">
 					<h1 className="logo">NameWorld</h1>
 				</div>
 

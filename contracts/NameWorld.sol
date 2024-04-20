@@ -15,7 +15,7 @@ contract NameWorld { //main контракт
     address payable public owner; // назначаем адресс владельца
     uint256 constant TOKEN_PRICE = 1 ether; // Цена одного токена NC в эфирах
 
-    uint[] public allIdTokens; //массив всех токенов
+    uint allIdTokens = 0; //массив всех токенов
     uint[] public saleNFTMas; //массив NFT выставленных на продажу
 
     mapping(uint => NameNftStruct) public idNftMap; //маппинг где лежит по значению сам токен nft
@@ -23,6 +23,7 @@ contract NameWorld { //main контракт
     mapping(string => uint) public idForString; // для получения айди токена по его строке
     mapping(string => bool) public statusName; //статус имени чтобы его не заняли больше
     mapping(address => uint[]) public userNft; // nft токены пользователя
+    mapping(uint => uint) public priceToken; // цена по которой продается токен
 
 
     constructor(address _NCAddress, address _NNFTAddress) { // вводим NC и NFT
@@ -38,14 +39,6 @@ contract NameWorld { //main контракт
 
     function transferNC (address _to, uint _value) public { //отправка токенов NC на другой адресс
         NC.transfer(msg.sender, _to, _value);
-        for(uint i = 0; i < userNft[msg.sender].length; i++) {     // Проходим по массиву в прямом порядке
-            if(userNft[msg.sender][i] == _value) { // Если найден элемент с значением _value, удаляем его из массива
-            userNft[msg.sender][i] = userNft[msg.sender][userNft[msg.sender].length - 1];// Перемещаем последний элемент на место удаляемого
-            userNft[msg.sender].pop();   // Удаляем последний элемент массива
-            // Выходим из цикла, если хотим удалить только первое вхождение _value
-            break;
-        }
-    }
 }
 
     function buyNC() public payable { // функция покупки пользователем NC , 1 ETH = 1000 NC
@@ -71,25 +64,58 @@ contract NameWorld { //main контракт
     //функция выпуска NFT
     function mintNNFT (string memory _name) public {
         require(statusName[_name] == false, "this name already used");
-        require(balanceNC(msg.sender) >= 100, "your NC < 100");
         statusName[_name] = true; // делаем имя забронированным
         if (msg.sender == owner) { //если пользователь владелец то не списывается NC
-            NNFT.mint(allIdTokens.length); //выпускаем токен
+            NNFT.mint(msg.sender, allIdTokens); //выпускаем токен
         } else { //если обычный пользователь
+            require(balanceNC(msg.sender) >= 100, "your NC < 100");
             transferNC(owner, 100); //плата за выпуск 1 nft = 100 NC
-            NNFT.mint(allIdTokens.length); //выпуск токена
+            NNFT.mint(msg.sender, allIdTokens); //выпуск токена
         }
         //Общий исход создания NNFT
-        idForString[_name] = allIdTokens.length;
-        statusToSale[allIdTokens.length] = false; // ставим статус продажи false
-        idNftMap[allIdTokens.length] = NameNftStruct(_name); // добавляем само nft в ключ значение
-        userNft[msg.sender].push(allIdTokens.length); //добавляем id token в мапинг юзера
-        allIdTokens.push(allIdTokens.length);//добавляем в общий массив id токена
-        
+        idForString[_name] = allIdTokens;
+        statusToSale[allIdTokens] = false; // ставим статус продажи false
+        idNftMap[allIdTokens] = NameNftStruct(_name); // добавляем само nft в ключ значение
+        userNft[msg.sender].push(allIdTokens); //добавляем id token в мапинг юзера
+        allIdTokens++;
     }
 
-    function safeTransferFrom(address _to, uint _tokenId) public { //перевод токена другому юзеру
-        NNFT.safeTransferFrom(msg.sender, _to, _tokenId);
+    function transferNNFT(address _from, address _to, uint _value) public { //перевод токена другому юзеру
+        NNFT.transfer(_from, _to, _value); // перевод
+        userNft[_to].push(_value); // пушим переведенный nft тому кому перевели
+        for(uint i = 0; i < userNft[_from].length; i++) {     // Проходим по массиву в прямом порядке
+            if(userNft[_from][i] == _value) { // Если найден элемент с значением _value, удаляем его из массива
+            userNft[_from][i] = userNft[_from][userNft[_from].length - 1];// Перемещаем последний элемент на место удаляемого
+            userNft[_from].pop();   // Удаляем последний элемент массива
+            // Выходим из цикла, если хотим удалить только первое вхождение _value
+            break;
+        }
+    }
+    }
+
+    function saleNNFT(uint _tokenId, uint _value) public { //продажа своей нфт выставить на продажу
+        require(statusToSale[_tokenId] != true, "this nft already saled");
+        require(msg.sender == ownerNNFT(_tokenId), "You are not the owner of this token"); //проверка на владельца
+        require(_value <= totalSupplyNC() && _value >= 0, "please , enter correctly price");//
+        saleNFTMas.push(_tokenId); // пушим в общий массив
+        priceToken[_tokenId] = _value; // назначается цена
+        statusToSale[_tokenId] = true; //статус продажи true
+
+    }
+
+    function buyNNFT(uint _tokenId) public { //покупка nft
+        require(balanceNC(msg.sender) >= priceToken[_tokenId], "not NC");
+        address salerToken = ownerNNFT(_tokenId);
+        transferNC(salerToken, priceToken[_tokenId]); //перевод NC продавцу
+        transferNNFT(salerToken, msg.sender, _tokenId);
+        for (uint i = 0; i < saleNFTMas.length; i++) {
+        if (saleNFTMas[i] == _tokenId) {
+            saleNFTMas[i] = saleNFTMas[saleNFTMas.length - 1];
+            saleNFTMas.pop();
+            statusToSale[_tokenId] = false;
+            break;
+            }
+        }
     }
 
     function balanceNNFT(address _address) public view returns (uint balance) { //функция для показа баланса nnft
@@ -105,8 +131,11 @@ contract NameWorld { //main контракт
     }
 
     function totalSupplyNFT() public view returns(uint total) {
-        total = allIdTokens.length;
+        total = allIdTokens;
     }
 
+    function saleNFTMasLength() public view returns(uint len) {
+        len = saleNFTMas.length;
+    }
 
 }
