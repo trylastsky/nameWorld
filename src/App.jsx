@@ -2,7 +2,7 @@ import { useState,useEffect} from 'react'
 //modules
 import Header from './modules/header/Header'
 import PrivateCab from './modules/privateCab/PrivateCab';
-import SalePage from './modules/salePage/SalePage';
+import SalePage from './modules/SalePage/SalePage';
 //contract ABI
 import { ethers } from 'ethers';
 import NameWorld from './artifacts/contracts/NameWorld.sol/NameWorld.json';
