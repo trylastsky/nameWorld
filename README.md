@@ -21,4 +21,4 @@ NameWorld - это Dapp-приложение, основанное на стан
 
 ---
 
-© Trylastsky NameWorld
+###### © Trylastsky NameWorld
